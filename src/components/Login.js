@@ -51,7 +51,7 @@ function Login() {
                 <input type='email' name='email' value={formData.email} onChange={handleInputChange} placeholder='hope@gmail.com' className='border border-black rounded p-[0.5rem] w-[40vw]'></input><br />
                 <label htmlFor='password'>Password</label><br />
                 <input type='password' name='password' value={formData.password} onChange={handleInputChange} placeholder='****' className='border border-black rounded p-[0.5rem] w-[40vw]' required></input><br />
-                <button type="submit" className='border border-black rounded mt-[2rem] px-[2rem] '>Login</button>
+                <button type="submit" className='border border-black rounded mt-[2rem] px-[2rem]'>Login</button>
             </form>
         </div>
     </div>
