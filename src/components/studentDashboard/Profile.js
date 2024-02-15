@@ -16,28 +16,40 @@ function Profile() {
         <div className="w-full p-[1rem] bg-gray-800 flex-none hidden md:block">
             <h1 className='text-white'>USER PROFILE</h1>
         </div>
-        <div className='flex mt-[2rem]'>
-            <img src='profile-svgrepo-com.svg' alt='user-profile' className='h-[10rem]'></img>
+        <div className='flex mt-[2rem] justify-center'>
+            <img src='profile-svgrepo-com.svg' alt='user-profile' className='h-[10rem] mr-[5rem]'></img>
             <div className='text-left'>
                 <h2 className='font-bold text-xl pt-[2rem]'>{profile.name}SHEILA KUGO</h2>
                 <h2 className='text-xl'>Junior Software Developer</h2>
                 <h3>{profile.email}sheila@gmail.com</h3>
             </div>
         </div>
-        <div>
-            <h1>SKILLS</h1>
-            <ul className='pt-[2rem]'>
-                <li>HTML/CSS</li>
-                <li>JavaScript</li>
-                <li>TypeScript</li>
-                <li>NodeJS</li>
-                <li>ExpressJS</li>
-                <li>Python</li>
-                <li>Java</li>
+        <div className='text-left ml-[4rem] w-[70%]'>
+            <h1 className='font-bold mb-[1rem]'>SKILLS</h1>
+            <ul className='border rounded flex content-around'>
+                <li className='border p-[1rem] w-[15rem]'>HTML/CSS - Advanced</li>
+                <li className='border p-[1rem] w-[15rem]'>JavaScript</li>
+                <li className='border p-[1rem] w-[15rem]'>TypeScript</li>
+                <li className='border p-[1rem] w-[15rem]'>NodeJS</li>
+                <li className='border p-[1rem] w-[15rem]'>ExpressJS</li>
+                <li className='border p-[1rem] w-[15rem]'>Python</li>
+                <li className='border p-[1rem] w-[15rem]'>Java</li>
             </ul>
         </div>
         <div className='mt-[2rem]'>
-            <h2>STATS</h2>
+            <h2 className='text-left ml-[4rem] font-bold'>STATS</h2>
+            <table className="table-auto border-collapse w-[70%] ml-[4rem]">
+                    <tbody>
+                        <tr>
+                            <td className="border p-[1rem]">Overall Grade:</td>
+                            <td className="border p-[1rem]">B</td>
+                        </tr>
+                        <tr>
+                            <td className="border p-[1rem]">Total Assessments Done:</td>
+                            <td className="border p-[1rem]">8</td>
+                        </tr>
+                    </tbody>
+                </table>
         </div>
     </div>
   )
