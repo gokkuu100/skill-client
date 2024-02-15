@@ -37,7 +37,7 @@ function Profile() {
             </ul>
         </div>
         <div className='mt-[2rem]'>
-            <h2 className='text-left ml-[4rem] font-bold'>STATS</h2>
+            <h2 className='text-left ml-[4rem] font-bold mb-[1rem]'>STATS</h2>
             <table className="table-auto border-collapse w-[70%] ml-[4rem]">
                     <tbody>
                         <tr>
