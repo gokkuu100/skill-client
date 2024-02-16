@@ -1,6 +1,7 @@
 import React from 'react'
 import Profile from './Profile'
 import { Link } from 'react-router-dom'
+import Assessment from './Assessment'
 
 function Sidebar() {
   return (
@@ -16,7 +17,7 @@ function Sidebar() {
             <h2 className='mt-[30rem] py-4 pl-9 pr-4 hover:bg-gray-600'>LOGOUT</h2>
         </div>
         <div className='w-full text-black'>
-        <Profile />
+        <Assessment />
         </div>
     </div>
   )
