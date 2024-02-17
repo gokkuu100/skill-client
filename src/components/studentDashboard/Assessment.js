@@ -30,11 +30,13 @@ function Assessment() {
           </thead>
           <tbody>
             {details.map((assessment, index) => (
-              <tr key={index} className='border'>
+              <tr key={index} className='hover:bg-gray-300'>
               <td className='p-4 border'>{assessment.title}</td>
               <td className='p-4 text-center border'>{assessment.totalQuestions}</td>
               <td className='p-4 border'>{assessment.description}</td>
-              <td className='p-4 text-center border'>{assessment.isCompleted ? 'Yes' : 'No'}</td>
+              <td className={`p-4 text-center border ${assessment.isCompleted ? 'text-green-500' : 'text-red-500'}`}>
+                  {assessment.isCompleted ? 'Yes' : 'No'}
+                </td>
               <td className='p-4 border'>{assessment.mentor}</td>
             </tr>
             ))}

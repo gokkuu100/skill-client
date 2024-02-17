@@ -6,6 +6,7 @@ import SignUp from './components/SignUp';
 import Sidebar from './components/studentDashboard/Sidebar';
 import Profile from './components/studentDashboard/Profile';
 import Assessment from './components/studentDashboard/Assessment';
+import Questions from './components/studentDashboard/Questions';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/menu' element={<Sidebar />}></Route>
         <Route path='/profile' element={<Profile />}></Route>
         <Route path='/assessment' element={<Assessment />}></Route>
+        <Route path='/questions' element={<Questions />}></Route>
 
 
       </Routes>
