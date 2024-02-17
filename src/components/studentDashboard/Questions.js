@@ -1,18 +1,43 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
   const [assessmentTitle, setAssessmentTitle] = useState([])
-
   const [selectedAnswers, setSelectedAnswers] = useState({})
+  const [remainingTime, setRemainingTime] = useState(600)
+  const { assessmentId } = useParams();
 
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/questions/2'); 
+        if (!assessmentId) {
+          // Handle the case where assessmentId is undefined, maybe redirect or show an error
+          console.log("error");
+          return;
+        }
+        
+        const response = await fetch(`http://localhost:5000/api/questions/${assessmentId}`); 
         const data = await response.json();
         setQuestions(data.questions);
         setAssessmentTitle(data.assessmentTitle)
+
+        // Set a timer to update the remaining time every second
+        const timer = setInterval(() => {
+          setRemainingTime((prevTime) => Math.max(0, prevTime - 1));
+        }, 1000);
+
+        // Set a timeout for auto-submission after 10 minutes
+        const submissionTimer = setTimeout(() => {
+          console.log("Auto-submitting assessment...");
+          handleSubmit();
+        }, 600000);
+
+        // Cleanup function to clear the timers when the component unmounts or changes
+        return () => {
+          clearInterval(timer);
+          clearTimeout(submissionTimer);
+        };
 
       } catch (error) {
         console.error('Error fetching questions:', error);
@@ -20,7 +45,7 @@ const Questions = () => {
     };
 
     fetchQuestions();
-  }, []); 
+  }, [assessmentId]); 
 
   const handleAnswerSelection = (questionId, selectedOption) => {
     setSelectedAnswers((prevAnswers) => ({ ...prevAnswers, [questionId]: selectedOption }));
@@ -43,6 +68,11 @@ const Questions = () => {
       console.log("Error submitting", e);
     }
   }
+  const formatTime = (timeInSeconds) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+    return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+  };
 
   return (
     <div>
@@ -51,7 +81,10 @@ const Questions = () => {
       </div>
 
       <div className="max-w-5xl mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">{assessmentTitle} Questions</h1>
+        <h1 className="text-2xl font-bold mb-4">{assessmentTitle} Questions</h1>
+        <div className="mb-4 p-4 border rounded-md w-[50]">
+          <p className="font-semibold mb-[1rem] text-left">Remaining Time: {formatTime(remainingTime)}</p>
+        </div>
       {questions.map((question) => (
           <div key={question.id} className="mb-4 p-4 border rounded-md w-[50]">
             <p className="font-semibold mb-[1rem] text-left">{question.title}</p>

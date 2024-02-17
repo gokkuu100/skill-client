@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Assessment() {
   const [details, setDetails] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetch('http://localhost:5000/api/student/1')
@@ -11,6 +13,20 @@ function Assessment() {
       })
       .catch((error) => console.error("Error fetching profile", error))
   }, [])
+
+  const handleRowClick = (assessment) => {
+    if (assessment.isCompleted) {
+      const shouldRedo = window.confirm("This assessment was already done. Do you want to redo you assessment?")
+      if (shouldRedo) {
+        navigate(`/questions/${assessment.id}`)
+      }
+    } else {
+      const shouldProceed = window.confirm("Click 'Ok' to do the assessment")
+      if (shouldProceed) {
+        navigate(`/questions/${assessment.id}`)
+      }
+    }
+  }
 
   return (
     <div className='flex flex-col w-full'>
@@ -30,7 +46,7 @@ function Assessment() {
           </thead>
           <tbody>
             {details.map((assessment, index) => (
-              <tr key={index} className='hover:bg-gray-300'>
+              <tr key={index} onClick={() => handleRowClick(assessment)} className='hover:bg-gray-300 cursor-pointer'>
               <td className='p-4 border'>{assessment.title}</td>
               <td className='p-4 text-center border'>{assessment.totalQuestions}</td>
               <td className='p-4 border'>{assessment.description}</td>
