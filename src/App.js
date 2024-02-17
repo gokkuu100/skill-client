@@ -18,7 +18,7 @@ function App() {
         <Route path='/menu' element={<Sidebar />}></Route>
         <Route path='/profile' element={<Profile />}></Route>
         <Route path='/assessment' element={<Assessment />}></Route>
-        <Route path='/questions' element={<Questions />}></Route>
+        <Route path='/questions/:assessmentId' element={<Questions />}></Route>
 
 
       </Routes>
