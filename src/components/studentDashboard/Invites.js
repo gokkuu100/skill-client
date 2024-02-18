@@ -4,8 +4,6 @@ function Invites() {
     const [data, setData] = useState([])
     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzA4MjQwOTAyLCJleHAiOjE3MDgyNDQ1MDJ9.n-yjYg46ZBrYoK8k8ZubKGzOxUMoPlMAFgmkSAcFDeI"
 
-
-    // Fetch data from server when component mounts
     useEffect(() => {
         fetch("http://localhost:5000/api/notifications/1",{
             headers: {
