@@ -34,14 +34,14 @@ function Assessment() {
         <h1 className='text-white'>ASSESSMENTS</h1>
       </div>
       <div className='tables overflow-x-auto flex mt-[7rem] ml-[5rem]'>
-        <table id="assessments" className="ml-[10rem] bg-white border border-gray-300 shadow-lg w-[60%] table-auto">
+        <table id="assessments" className="ml-[10rem] bg-white border shadow-lg w-[60%] table-auto">
           <thead>
-            <tr className='bg-gray-200'>
-              <th className='p-4 text-center font-bold uppercase tracking-widest border'>Title</th>
-              <th className='p-4 text-center font-bold uppercase tracking-widest border'>Number of questions</th>
-              <th className='p-4 text-center font-bold uppercase tracking-widest border'>Description</th>
-              <th className='p-4 text-center font-bold uppercase tracking-widest border'>Completed</th>
-              <th className='p-4 text-center font-bold uppercase tracking-widest border'>Mentor</th>
+            <tr className='bg-[#EA501A] text-white font-bold'>
+              <th className='p-4 text-center font-bold uppercase tracking-widest'>Title</th>
+              <th className='p-4 text-center font-bold uppercase tracking-widest'>Number of questions</th>
+              <th className='p-4 text-center font-bold uppercase tracking-widest'>Description</th>
+              <th className='p-4 text-center font-bold uppercase tracking-widest'>Completed</th>
+              <th className='p-4 text-center font-bold uppercase tracking-widest'>Mentor</th>
             </tr>
           </thead>
           <tbody>
