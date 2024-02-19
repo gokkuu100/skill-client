@@ -9,6 +9,9 @@ import Assessment from './components/studentDashboard/Assessment';
 import Questions from './components/studentDashboard/Questions';
 import Invites from './components/studentDashboard/Invites';
 import Grades from './components/studentDashboard/Grades';
+import MentoProfile from './components/mentorDashboard/MentorProfile';
+import MentorSidebar from './components/mentorDashboard/MentorSidebar';
+import CreateAssessment from './components/mentorDashboard/CreateAssessment';
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
         <Route path='/invites' element={<Invites />}></Route>
         <Route path='/grades' element={<Grades />}></Route>
 
+        <Route path='/mentor/profile' element={<MentoProfile />}></Route>
+        <Route path='/mentor/menu' element={<MentorSidebar />}></Route>
+        <Route path='/create' element={<CreateAssessment />}></Route>
       </Routes>
     </div>
   );

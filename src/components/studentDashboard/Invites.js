@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-function Invites() {
+function Invites({ setInviteCount }) {
     const [data, setData] = useState([]);
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzA4MjQ0OTE1LCJleHAiOjE3MDgyNDg1MTV9.KuiEDSdw808_Sz2b15y0E85uP3db7TcUX5LXAJ1p1xY"; // Replace with your actual token
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzA4MzI2MDkzLCJleHAiOjE3MDgzMjk2OTN9.be5sko6Yl7rwNhEPiVG6rqb1GI0viT3yTaK-2wEKLjc"; // Replace with your actual token
 
     useEffect(() => {
         fetch("http://localhost:5000/api/notifications/1", {
@@ -13,9 +13,12 @@ function Invites() {
             method: "GET"
         })
             .then((res) => res.json())
-            .then((data) => setData(data.assessmentDetails))
+            .then((data) => {
+                setData(data.assessmentDetails)
+                setInviteCount(data.assessmentDetails.length)
+            })
             .catch((error) => console.error("Error fetching data", error));
-    }, []);
+    }, [setInviteCount]);
 
     const handleResponse = async (inviteId, userResponse) => {
         try {
