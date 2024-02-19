@@ -12,7 +12,6 @@ const Questions = () => {
     const fetchQuestions = async () => {
       try {
         if (!assessmentId) {
-          // Handle the case where assessmentId is undefined, maybe redirect or show an error
           console.log("error");
           return;
         }
@@ -22,18 +21,18 @@ const Questions = () => {
         setQuestions(data.questions);
         setAssessmentTitle(data.assessmentTitle)
 
-        // Set a timer to update the remaining time every second
+        // timer
         const timer = setInterval(() => {
           setRemainingTime((prevTime) => Math.max(0, prevTime - 1));
         }, 1000);
 
-        // Set a timeout for auto-submission after 10 minutes
+        // timeout
         const submissionTimer = setTimeout(() => {
           console.log("Auto-submitting assessment...");
           handleSubmit();
         }, 600000);
 
-        // Cleanup function to clear the timers when the component unmounts or changes
+        // clears timeout
         return () => {
           clearInterval(timer);
           clearTimeout(submissionTimer);
@@ -94,7 +93,7 @@ const Questions = () => {
                   <input
                     type="radio"
                     name={`question_${question.id}`}
-                    value={question[choice]} // Use the actual value of the choice
+                    value={question[choice]}
                     onChange={() => handleAnswerSelection(question.id, question[choice])}
                   />
                   <span className="ml-2">{question[choice]}</span>
