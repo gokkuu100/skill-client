@@ -12,6 +12,8 @@ import Grades from './components/studentDashboard/Grades';
 import MentoProfile from './components/mentorDashboard/MentorProfile';
 import MentorSidebar from './components/mentorDashboard/MentorSidebar';
 import CreateAssessment from './components/mentorDashboard/CreateAssessment';
+import SendInvites from './components/mentorDashboard/SendInvites';
+import MentorGrades from './components/mentorDashboard/MentorGrades';
 
 function App() {
   return (
@@ -30,6 +32,9 @@ function App() {
         <Route path='/mentor/profile' element={<MentoProfile />}></Route>
         <Route path='/mentor/menu' element={<MentorSidebar />}></Route>
         <Route path='/create' element={<CreateAssessment />}></Route>
+        <Route path='/mentor/invites' element={<SendInvites />}></Route>
+        <Route path='/mentor/grades' element={<MentorGrades />}></Route>
+        
       </Routes>
     </div>
   );

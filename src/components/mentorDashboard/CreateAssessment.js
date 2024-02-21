@@ -9,7 +9,7 @@ function CreateAssessment() {
 
   const [questions, setQuestions] = useState([
     {
-      questTitle: '',
+      title: '',
       choice1: '',
       choice2: '',
       choice3: '',
@@ -31,13 +31,13 @@ function CreateAssessment() {
   const handleAddQuestion = () => {
     setQuestions([
       ...questions,
-      { questTitle: '', choice1: '', choice2: '', choice3: '', choice4: '', correctChoice: '' },
+      { title: '', choice1: '', choice2: '', choice3: '', choice4: '', correctChoice: '' },
     ]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       // Submit Assessment
       const assessmentResponse = await fetch('http://localhost:5000/api/assessments', {
@@ -47,30 +47,28 @@ function CreateAssessment() {
         },
         body: JSON.stringify(assessmentData),
       });
-
+  
       if (assessmentResponse.ok) {
         const newAssessment = await assessmentResponse.json();
         console.log('New Assessment:', newAssessment);
-
+  
         // Submit Questions
-        for (const question of questions) {
-          const questionsResponse = await fetch(
-            `http://localhost:5000/api/questions/${assessmentData.mentorId}/11`,
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ ...question, mentorId: assessmentData.mentorId }),
-            }
-          );
-
-          if (questionsResponse.ok) {
-            const newQuestion = await questionsResponse.json();
-            console.log('New Question:', newQuestion);
-          } else {
-            console.error('Failed to create questions');
+        const questionsResponse = await fetch(
+          `http://localhost:5000/api/questions/${assessmentData.mentorId}/${newAssessment.id}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ questions, mentorId: assessmentData.mentorId }),
           }
+        );
+  
+        if (questionsResponse.ok) {
+          const newQuestions = await questionsResponse.json();
+          console.log('New Questions:', newQuestions);
+        } else {
+          console.error('Failed to create questions');
         }
       } else {
         console.error('Failed to create assessment');
@@ -101,8 +99,8 @@ function CreateAssessment() {
             <label>Question title</label>
             <input
               type="text"
-              name="questTitle"
-              value={question.questTitle}
+              name="title"
+              value={question.title}
               onChange={(e) => handleQuestionChange(e, index)}
             />
             <br />
