@@ -15,6 +15,8 @@ function MentorSidebar() {
             <ul className='mt-[3.75rem] mb-[3rem] divide-y divide-gray-700/50'>
                 <li className='py-4 pl-9 pr-4 hover:bg-gray-600'><Link to="/profile"> DASHBOARD</Link></li>
                 <li className='py-4 pl-9 pr-4 hover:bg-gray-600'><Link to="/profile"> CREATE ASSESSMENT</Link></li>
+                <li className='py-4 pl-9 pr-4 hover:bg-gray-600'><Link to="/mentor/invites"> INVITES</Link></li>
+                <li className='py-4 pl-9 pr-4 hover:bg-gray-600'><Link to="/grades"> GRADES</Link></li>
 
             </ul>
             <h2 className='mt-[30rem] py-4 pl-9 pr-4 hover:bg-gray-600'>LOGOUT</h2>
