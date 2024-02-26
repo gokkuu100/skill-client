@@ -18,9 +18,12 @@ function MentorGrades() {
   }, []);
 
   return (
-    <div className="container mx-auto mt-8">
-      <h1 className="text-3xl font-bold mb-4">Mentor Grades</h1>
-      <table className="min-w-full border border-gray-300">
+    <div className="">
+        <div className="w-full p-[1rem] bg-gray-800 flex-none hidden md:block mb-[2rem]">
+            <h1 className='text-white'>STUDENT GRADES</h1>
+        </div>
+
+      <table className="w-[50%] border border-gray-300">
         <thead>
           <tr className="bg-[#EA501A]">
             <th className="py-2 px-4 border-b text-white">Student Name</th>

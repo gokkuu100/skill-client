@@ -14,6 +14,7 @@ import MentorSidebar from './components/mentorDashboard/MentorSidebar';
 import CreateAssessment from './components/mentorDashboard/CreateAssessment';
 import SendInvites from './components/mentorDashboard/SendInvites';
 import MentorGrades from './components/mentorDashboard/MentorGrades';
+import MentorStats from './components/mentorDashboard/MentorStats';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path='/create' element={<CreateAssessment />}></Route>
         <Route path='/mentor/invites' element={<SendInvites />}></Route>
         <Route path='/mentor/grades' element={<MentorGrades />}></Route>
+        <Route path='/mentor/stats' element={<MentorStats />}></Route>
         
       </Routes>
     </div>

@@ -45,8 +45,10 @@ function SendInvites() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Assessments by Mentor</h1>
+    <div className="">
+        <div className="w-full p-[1rem] bg-gray-800 flex-none hidden md:block mb-[2rem]">
+            <h1 className='text-white'>SEND INVITES</h1>
+        </div>
       <table className="min-w-full bg-white border border-gray-300">
         <thead>
           <tr>

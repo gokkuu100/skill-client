@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 function Invites({ setInviteCount }) {
     const [data, setData] = useState([]);
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzA4MzI2MDkzLCJleHAiOjE3MDgzMjk2OTN9.be5sko6Yl7rwNhEPiVG6rqb1GI0viT3yTaK-2wEKLjc"; // Replace with your actual token
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzA4OTQ0ODcyLCJleHAiOjE3MDg5NDg0NzJ9.RlJMsDShJ3qdILWnpeZBjhnKiWguRfI2P-2BJe2lwnE"; // Replace with your actual token
 
     useEffect(() => {
         fetch("http://localhost:5000/api/notifications/1", {
@@ -51,9 +51,9 @@ function Invites({ setInviteCount }) {
                 <table className='w-[60%] overflow-x-auto table-auto divide-y divide-gray-200 border border-gray-300'>
                     <thead className=''>
                         <tr className='bg-gray-200'>
-                            <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase">Assessment Name</th>
-                            <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase">Mentor</th>
-                            <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase">Status</th>
+                            <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase bg-[#EA501A] text-white">Assessment Name</th>
+                            <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase bg-[#EA501A] text-white">Mentor</th>
+                            <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase bg-[#EA501A] text-white">Status</th>
                         </tr>
                     </thead>
                     <tbody className='divide-y divide-gray-200'>

@@ -16,7 +16,7 @@ function Sidebar() {
             <ul className='mt-[3.75rem] mb-[3rem] divide-y divide-gray-700/50'>
                 <li className='py-4 pl-9 pr-4 hover:bg-gray-600'><Link to="/profile"><FontAwesomeIcon icon={faUser} /> PROFILE</Link></li>
                 <li className='py-4 pl-9 pr-4 hover:bg-gray-600'><Link to='/assessment'>ASSESSMENTS</Link></li>
-                <li className='py-4 pl-9 pr-4 hover:bg-gray-600'>GRADES</li>
+                <li className='py-4 pl-9 pr-4 hover:bg-gray-600'><Link to='/grades'>GRADES</Link></li>
                 <li className='py-4 pl-9 pr-4 hover:bg-gray-600'><Link to='/invites'>INVITES {inviteCount > 0 && <span className='bg-red-500 text-white rounded-full px-2'>{inviteCount}</span>}</Link></li>
                 <li className='py-4 pl-9 pr-4 hover:bg-gray-600'>TRIAL ASSESSMENT</li>
                 <li className='py-4 pl-9 pr-4 hover:bg-gray-600'>CODILITY PRACTISE</li>
