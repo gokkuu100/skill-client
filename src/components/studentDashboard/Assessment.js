@@ -1,18 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import NotAuthorized from '../NotAuthorized';
 
 function Assessment() {
   const [details, setDetails] = useState([])
+  const [isAuthorized, setIsAuthorized] = useState(true); 
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/student/1')
+    const token = localStorage.getItem('token')
+
+    if (!token) {
+      setIsAuthorized(false) 
+      return;
+    }
+
+    fetch('http://localhost:5000/api/student/1', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
       .then(response => response.json())
       .then((data) => {
         setDetails(data.assessmentDetails)
       })
       .catch((error) => console.error("Error fetching profile", error))
-  }, [])
+  }, [navigate])
+
+  if (!isAuthorized) {
+    return <NotAuthorized />;
+  }
 
   const handleRowClick = (assessment) => {
     if (assessment.isCompleted) {
