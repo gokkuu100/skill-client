@@ -36,7 +36,6 @@ function App() {
         <Route path='/mentor/invites' element={<SendInvites />}></Route>
         <Route path='/mentor/grades' element={<MentorGrades />}></Route>
         <Route path='/mentor/stats' element={<MentorStats />}></Route>
-        
       </Routes>
     </div>
   );

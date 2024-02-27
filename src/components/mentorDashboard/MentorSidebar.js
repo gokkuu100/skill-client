@@ -33,7 +33,9 @@ function MentorSidebar() {
         </ul>
         <h2 className='mt-[30rem] py-4 pl-9 pr-4 hover:bg-gray-600'>LOGOUT</h2>
       </div>
-      <div className='w-full text-black'></div>
+      <div className='remaining-screen'>
+     
+      </div>
     </div>
   );
 }
