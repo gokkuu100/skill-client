@@ -5,9 +5,10 @@ function MentorGrades() {
   const [grades, setGrades] = useState([]);
 
   useEffect(() => {
+    const userId = localStorage.getItem('id')
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/allgrades/1');
+        const response = await axios.get(`http://localhost:5000/api/allgrades/${userId}`);
         setGrades(response.data.gradeDetails);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -23,7 +24,7 @@ function MentorGrades() {
             <h1 className='text-white'>STUDENT GRADES</h1>
         </div>
 
-      <table className="w-[50%] border border-gray-300">
+      <table className="w-[90%] ml-[2rem] border border-gray-300">
         <thead>
           <tr className="bg-[#EA501A]">
             <th className="py-2 px-4 border-b text-white">Student Name</th>

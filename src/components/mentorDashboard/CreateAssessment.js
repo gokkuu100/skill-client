@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
 function CreateAssessment() {
+  const userId = localStorage.getItem('id')
   const [assessmentData, setAssessmentData] = useState({
     title: '',
     description: '',
-    mentorId: 1,
+    mentorId: userId,
   });
 
   const [questions, setQuestions] = useState([
