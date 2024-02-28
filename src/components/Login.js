@@ -31,10 +31,12 @@ function Login() {
                 const data = await response.json()
                 if (data.token) {
                     localStorage.setItem('token', data.token)
+                    localStorage.setItem('id', data.user.id)
+
                     if (data.user.role === 'student') {
-                        navigate('/profile')
+                        navigate('/menu')
                     } else if (data.user.role === 'mentor') {
-                        navigate('/mentor/profile')
+                        navigate('/mentor/menu')
                     } else {
                         console.error("error");
                     }

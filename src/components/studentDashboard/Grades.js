@@ -17,7 +17,7 @@ function Grades() {
             <h1 className='text-white'>GRADES</h1>
         </div>
         <div>
-            <table className='w-[30rem] ml-[10rem] overflow-x-auto table-auto divide-y divide-gray-200 border border-gray-300'>
+            <table className='w-[90%] ml-[2rem] mt-[2rem] overflow-x-auto table-auto divide-y divide-gray-200 border border-gray-300'>
                 <thead>
                     <tr className='bg-[#EA501A]'>
                         <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase text-white">Assessment</th>

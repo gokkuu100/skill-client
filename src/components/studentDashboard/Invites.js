@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 function Invites({ setInviteCount }) {
     const [data, setData] = useState([]);
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzA4OTQ0ODcyLCJleHAiOjE3MDg5NDg0NzJ9.RlJMsDShJ3qdILWnpeZBjhnKiWguRfI2P-2BJe2lwnE"; // Replace with your actual token
+    const token = localStorage.getItem('token')
+    const userId = localStorage.getItem('id')
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/notifications/1", {
+        fetch(`http://localhost:5000/api/notifications/${userId}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
@@ -34,6 +35,13 @@ function Invites({ setInviteCount }) {
 
             if (response.ok) {
                 console.log(`Invite response recorded successfully for inviteID ${inviteId}`);
+
+                // Display confirmation message
+                const confirmationMessage = `Invitation ${userResponse === 'accept' ? 'accepted' : 'declined'} successfully.`;
+                window.alert(confirmationMessage);
+
+                // Refresh the page
+                window.location.reload();
             } else {
                 console.error("Failed to record invite response");
             }
@@ -47,8 +55,8 @@ function Invites({ setInviteCount }) {
             <div className="w-full p-4 bg-gray-800 flex-none hidden md:block">
                 <h1 className='text-white'>INVITES</h1>
             </div>
-            <div className="mt-4 ml-[6rem]">
-                <table className='w-[60%] overflow-x-auto table-auto divide-y divide-gray-200 border border-gray-300'>
+            <div className="mt-4 ml-[2rem]">
+                <table className='w-[90%] overflow-x-auto table-auto divide-y divide-gray-200 border border-gray-300'>
                     <thead className=''>
                         <tr className='bg-gray-200'>
                             <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase bg-[#EA501A] text-white">Assessment Name</th>

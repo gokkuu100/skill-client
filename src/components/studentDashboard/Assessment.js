@@ -9,13 +9,14 @@ function Assessment() {
 
   useEffect(() => {
     const token = localStorage.getItem('token')
+    const userId = localStorage.getItem('id');
 
     if (!token) {
       setIsAuthorized(false) 
       return;
     }
 
-    fetch('http://localhost:5000/api/student/1', {
+    fetch(`http://localhost:5000/api/student/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
@@ -50,8 +51,9 @@ function Assessment() {
       <div className="w-full p-4 bg-gray-800 flex-none hidden md:block">
         <h1 className='text-white'>ASSESSMENTS</h1>
       </div>
-      <div className='tables overflow-x-auto flex mt-[7rem] ml-[5rem]'>
-        <table id="assessments" className="ml-[10rem] bg-white border shadow-lg w-[60%] table-auto">
+      <h3>Select on an assessment to attempt if not yet done</h3>
+      <div className='tables overflow-x-auto flex mt-[2rem]'>
+        <table id="assessments" className="ml-[2rem] bg-white border shadow-lg w-[90%] table-auto">
           <thead>
             <tr className='bg-[#EA501A] text-white font-bold'>
               <th className='p-4 text-center font-bold uppercase tracking-widest'>Title</th>
