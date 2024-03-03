@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function CreateAssessment() {
   const userId = localStorage.getItem('id')
+  const navigate = useNavigate()
   const [assessmentData, setAssessmentData] = useState({
     title: '',
     description: '',
@@ -81,8 +83,9 @@ function CreateAssessment() {
 
   return (
     <div>
-      <div className="w-full p-4 bg-gray-800 flex-none hidden md:block">
-        <h1 className="text-white">CREATE ASSESSMENT</h1>
+      <div className="w-full p-4 bg-gray-800 flex items-center">
+        <img src="icons8-left-arrow-64.png" className="h-[2rem] cursor-pointer" alt="left-arrow" onClick={() => navigate(-1)} />
+        <h1 className="text-white ml-[55rem]">CREATE ASSESSMENTS</h1>
       </div>
       <form onSubmit={handleSubmit} className="mx-10 my-4 text-center">
         {/* Assessment Section */}

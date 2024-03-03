@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function MentorGrades() {
   const [grades, setGrades] = useState([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const userId = localStorage.getItem('id')
@@ -20,11 +22,12 @@ function MentorGrades() {
 
   return (
     <div className="">
-        <div className="w-full p-[1rem] bg-gray-800 flex-none hidden md:block mb-[2rem]">
-            <h1 className='text-white'>STUDENT GRADES</h1>
-        </div>
+      <div className="w-full p-4 bg-gray-800 flex items-center">
+        <img src="/icons8-left-arrow-64.png" className="h-[2rem] cursor-pointer" alt="left-arrow" onClick={() => navigate(-1)} />
+        <h1 className="text-white ml-[55rem]">STUDENT GRADES</h1>
+      </div>
 
-      <table className="w-[90%] ml-[2rem] border border-gray-300">
+      <table className="w-[90%] ml-[2rem] border border-gray-300 mt-[2rem]">
         <thead>
           <tr className="bg-[#EA501A]">
             <th className="py-2 px-4 border-b text-white">Student Name</th>

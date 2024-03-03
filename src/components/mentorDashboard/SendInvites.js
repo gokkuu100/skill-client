@@ -49,12 +49,11 @@ function SendInvites() {
 
   return (
     <div className="">
-        <div className="w-full p-[1rem] bg-gray-800 flex-none hidden md:block mb-[2rem]">
-      
-
-        <h1 className='top-bar text-white mx-auto'>SEND INVITES</h1>
+        <div className="w-full p-4 bg-gray-800 flex items-center">
+          <img src="/icons8-left-arrow-64.png" className="h-[2rem] cursor-pointer" alt="left-arrow" onClick={() => navigate(-1)} />
+          <h1 className="text-white ml-[55rem]">SEND INVITES</h1>
         </div>
-      <table className="w-[90%] ml-[2rem] bg-white border border-gray-300">
+      <table className="w-[90%] ml-[2rem] bg-white border border-gray-300 mt-[2rem]">
         <thead>
           <tr className='bg-[#EA501A] text-white '>
             <th className="py-2 px-4 border-b">Assessment Title</th>
