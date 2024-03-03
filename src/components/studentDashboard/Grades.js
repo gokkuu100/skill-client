@@ -1,17 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import NotAuthorized from '../NotAuthorized';
 
 function Grades() {
     const [gradeData, setGradeData] = useState([])
+    const [isAuthorized, setIsAuthorized] = useState(true);
     const navigate = useNavigate()
+    const token = localStorage.getItem('token')
 
     // Get grades data
     useEffect(() => {
-        fetch(`http://localhost:5000/api/grades/1`)
+        if (!token) {
+            setIsAuthorized(false);
+            return;
+          }
+
+        fetch(`http://localhost:5000/api/grades/1`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        })
         .then((res) => res.json())
         .then((data) => setGradeData(data.assessmentDetails))
         .catch((error) => console.error(error))
     }, [])
+
+    if (!isAuthorized) {
+        return <NotAuthorized />;
+    };
 
   return (
     <div>

@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import NotAuthorized from '../NotAuthorized';
 
 function Invites({ setInviteCount }) {
     const [data, setData] = useState([]);
     const token = localStorage.getItem('token')
     const userId = localStorage.getItem('id')
     const navigate = useNavigate()
+    const [isAuthorized, setIsAuthorized] = useState(true);
+
 
     useEffect(() => {
+        if (!token) {
+            setIsAuthorized(false);
+            return;
+        }
+
         fetch(`http://localhost:5000/api/notifications/${userId}`, {
             headers: {
                 "Content-Type": "application/json",
@@ -22,6 +30,7 @@ function Invites({ setInviteCount }) {
             })
             .catch((error) => console.error("Error fetching data", error));
     }, [setInviteCount]);
+
 
     const handleResponse = async (inviteId, userResponse) => {
         try {
@@ -50,6 +59,10 @@ function Invites({ setInviteCount }) {
         } catch (error) {
             console.error("Error recording invite response", error);
         }
+    };
+
+    if (!isAuthorized) {
+        return <NotAuthorized />;
     };
 
     return (
