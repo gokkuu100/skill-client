@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Invites({ setInviteCount }) {
     const [data, setData] = useState([]);
     const token = localStorage.getItem('token')
     const userId = localStorage.getItem('id')
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetch(`http://localhost:5000/api/notifications/${userId}`, {
@@ -52,8 +54,9 @@ function Invites({ setInviteCount }) {
 
     return (
         <div>
-            <div className="w-full p-4 bg-gray-800 flex-none hidden md:block">
-                <h1 className='text-white'>INVITES</h1>
+            <div className="w-full p-4 bg-gray-800 flex items-center">
+                <img src="icons8-left-arrow-64.png" className="h-[2rem] cursor-pointer" alt="left-arrow" onClick={() => navigate(-1)} />
+                <h1 className="text-white ml-[55rem]">INVITES</h1>
             </div>
             <div className="mt-4 ml-[2rem]">
                 <table className='w-[90%] overflow-x-auto table-auto divide-y divide-gray-200 border border-gray-300'>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Grades() {
     const [gradeData, setGradeData] = useState([])
+    const navigate = useNavigate()
 
     // Get grades data
     useEffect(() => {
@@ -13,8 +15,9 @@ function Grades() {
 
   return (
     <div>
-        <div className="w-full p-4 bg-gray-800 flex-none hidden md:block">
-            <h1 className='text-white'>GRADES</h1>
+        <div className="w-full p-4 bg-gray-800 flex items-center">
+            <img src="icons8-left-arrow-64.png" className="h-[2rem] cursor-pointer" alt="left-arrow" onClick={() => navigate(-1)} />
+            <h1 className="text-white ml-[55rem]">GRADES</h1>
         </div>
         <div>
             <table className='w-[90%] ml-[2rem] mt-[2rem] overflow-x-auto table-auto divide-y divide-gray-200 border border-gray-300'>
