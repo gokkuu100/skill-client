@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import NotAuthorized from '../NotAuthorized';
 
 function CreateAssessment() {
   const userId = localStorage.getItem('id')
   const navigate = useNavigate()
+  const [isAuthorized, setIsAuthorized] = useState(true);
+  const token = localStorage.getItem('token')
   const [assessmentData, setAssessmentData] = useState({
     title: '',
     description: '',
@@ -42,11 +45,17 @@ function CreateAssessment() {
     e.preventDefault();
   
     try {
+      if (!token) {
+        setIsAuthorized(false);
+        return;
+      }
+
       // Submit Assessment
       const assessmentResponse = await fetch('http://localhost:5000/api/assessments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(assessmentData),
       });
@@ -62,6 +71,7 @@ function CreateAssessment() {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`
             },
             body: JSON.stringify({ questions, mentorId: assessmentData.mentorId }),
           }
@@ -80,6 +90,10 @@ function CreateAssessment() {
       console.error(error);
     }
   };
+
+  if (!isAuthorized) {
+    return <NotAuthorized />;
+  }
 
   return (
     <div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import NotAuthorized from '../NotAuthorized';
 
 function SendInvites() {
   const [assessments, setAssessments] = useState([]);
@@ -8,17 +9,27 @@ function SendInvites() {
   const [selectedAssessment, setSelectedAssessment] = useState(null);
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(true);
+  const token = localStorage.getItem('token')
   const navigate = useNavigate()
   const userId = localStorage.getItem('id')
 
   useEffect(() => {
-    // Fetch assessments by mentor (replace 'mentorId' with the actual mentor ID)
-    axios.get(`http://localhost:5000/api/assessments/${userId}`)
+    if (!token) {
+      setIsAuthorized(false);
+      return;
+    }
+
+    axios.get(`http://localhost:5000/api/assessments/${userId}`,
+    {headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json'}}
+    )
       .then(response => setAssessments(response.data.assessments))
       .catch(error => console.error('Error fetching assessments:', error));
 
     // Fetch all students
-    axios.get('http://localhost:5000/api/students')
+    axios.get('http://localhost:5000/api/students',
+    {headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json'}}
+    )
       .then(response => setStudents(response.data.students))
       .catch(error => console.error('Error fetching students:', error));
   }, []);
@@ -38,7 +49,9 @@ function SendInvites() {
         mentorId,
         studentIds: selectedStudents,
         assessmentId: selectedAssessment,
-      });
+      },
+      {headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json'}}
+      );
 
       console.log('Invites sent:', response.data.invites);
       setModalOpen(false);
@@ -46,6 +59,10 @@ function SendInvites() {
       console.error('Error sending invites:', error);
     }
   };
+
+  if (!isAuthorized) {
+    return <NotAuthorized />;
+  }
 
   return (
     <div className="">

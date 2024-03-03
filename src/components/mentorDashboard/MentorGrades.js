@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import NotAuthorized from '../NotAuthorized';
 
 function MentorGrades() {
   const [grades, setGrades] = useState([]);
+  const [isAuthorized, setIsAuthorized] = useState(true);
   const navigate = useNavigate()
 
   useEffect(() => {
     const userId = localStorage.getItem('id')
+    const token = localStorage.getItem('token')
+
+    if (!token) {
+      setIsAuthorized(false);
+      return;
+    }
+
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/allgrades/${userId}`);
+        const response = await axios.get(`http://localhost:5000/api/allgrades/${userId}`, {headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json'}});
         setGrades(response.data.gradeDetails);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -19,6 +28,10 @@ function MentorGrades() {
 
     fetchData();
   }, []);
+
+  if (!isAuthorized) {
+    return <NotAuthorized />;
+  }
 
   return (
     <div className="">
