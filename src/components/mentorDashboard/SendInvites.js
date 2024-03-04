@@ -10,8 +10,8 @@ function SendInvites() {
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [isAuthorized, setIsAuthorized] = useState(true);
-  const token = localStorage.getItem('token')
   const navigate = useNavigate()
+  const token = localStorage.getItem('token')
   const userId = localStorage.getItem('id')
 
   useEffect(() => {

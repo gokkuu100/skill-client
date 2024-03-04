@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from './actions/authActions';
 import * as yup from  'yup';
 
 const validationSchema = yup.object().shape({
@@ -10,11 +12,13 @@ function Login() {
     const [formData, setFormData ] = useState({email: '', password: ''})
     const [errors, setErrors] = useState({});
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     function handleInputChange(e) {
         const { name, value } = e.target
         setFormData({...formData, [name]:value })
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -32,6 +36,8 @@ function Login() {
                 if (data.token) {
                     localStorage.setItem('token', data.token)
                     localStorage.setItem('id', data.user.id)
+
+                    dispatch(loginSuccess(data.user))
 
                     if (data.user.role === 'student') {
                         navigate('/menu')

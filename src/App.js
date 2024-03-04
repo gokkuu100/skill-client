@@ -1,6 +1,7 @@
 import './App.css';
 import HomePage from './components/HomePage';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Sidebar from './components/studentDashboard/Sidebar';
@@ -15,15 +16,27 @@ import CreateAssessment from './components/mentorDashboard/CreateAssessment';
 import SendInvites from './components/mentorDashboard/SendInvites';
 import MentorGrades from './components/mentorDashboard/MentorGrades';
 import MentorStats from './components/mentorDashboard/MentorStats';
+import { useEffect } from 'react';
 
 function App() {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    // Redirect to login if not authenticated
+    if (!isAuthenticated) {
+      console.log("not authenticated");
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
+
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/signup' element={<SignUp />}></Route>
-        <Route path='/menu' element={<Sidebar />}></Route>
+        <Route path='/menu' element={isAuthenticated ? <Sidebar /> : navigate('/login')}></Route>
         <Route path='/profile' element={<Profile />}></Route>
         <Route path='/assessment' element={<Assessment />}></Route>
         <Route path='/questions/:assessmentId' element={<Questions />}></Route>
