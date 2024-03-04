@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import NotAuthorized from '../NotAuthorized';
 
 function Invites({ setInviteCount }) {
     const [data, setData] = useState([]);
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzA4MzI2MDkzLCJleHAiOjE3MDgzMjk2OTN9.be5sko6Yl7rwNhEPiVG6rqb1GI0viT3yTaK-2wEKLjc"; // Replace with your actual token
+    const token = localStorage.getItem('token')
+    const userId = localStorage.getItem('id')
+    const navigate = useNavigate()
+    const [isAuthorized, setIsAuthorized] = useState(true);
+
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/notifications/1", {
+        if (!token) {
+            setIsAuthorized(false);
+            return;
+        }
+
+        fetch(`http://localhost:5000/api/notifications/${userId}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
@@ -19,6 +30,7 @@ function Invites({ setInviteCount }) {
             })
             .catch((error) => console.error("Error fetching data", error));
     }, [setInviteCount]);
+
 
     const handleResponse = async (inviteId, userResponse) => {
         try {
@@ -34,6 +46,13 @@ function Invites({ setInviteCount }) {
 
             if (response.ok) {
                 console.log(`Invite response recorded successfully for inviteID ${inviteId}`);
+
+                // Display confirmation message
+                const confirmationMessage = `Invitation ${userResponse === 'accept' ? 'accepted' : 'declined'} successfully.`;
+                window.alert(confirmationMessage);
+
+                // Refresh the page
+                window.location.reload();
             } else {
                 console.error("Failed to record invite response");
             }
@@ -42,18 +61,23 @@ function Invites({ setInviteCount }) {
         }
     };
 
+    if (!isAuthorized) {
+        return <NotAuthorized />;
+    };
+
     return (
         <div>
-            <div className="w-full p-4 bg-gray-800 flex-none hidden md:block">
-                <h1 className='text-white'>INVITES</h1>
+            <div className="w-full p-4 bg-gray-800 flex items-center">
+                <img src="icons8-left-arrow-64.png" className="h-[2rem] cursor-pointer" alt="left-arrow" onClick={() => navigate(-1)} />
+                <h1 className="text-white ml-[55rem]">INVITES</h1>
             </div>
-            <div className="mt-4 ml-[6rem]">
-                <table className='w-[60%] overflow-x-auto table-auto divide-y divide-gray-200 border border-gray-300'>
+            <div className="mt-4 ml-[2rem]">
+                <table className='w-[90%] overflow-x-auto table-auto divide-y divide-gray-200 border border-gray-300'>
                     <thead className=''>
                         <tr className='bg-gray-200'>
-                            <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase">Assessment Name</th>
-                            <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase">Mentor</th>
-                            <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase">Status</th>
+                            <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase bg-[#EA501A] text-white">Assessment Name</th>
+                            <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase bg-[#EA501A] text-white">Mentor</th>
+                            <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase bg-[#EA501A] text-white">Status</th>
                         </tr>
                     </thead>
                     <tbody className='divide-y divide-gray-200'>

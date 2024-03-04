@@ -8,4 +8,4 @@ function MentorProfile() {
   )
 }
 
-export default MentorProfile
+export default MentorProfile;

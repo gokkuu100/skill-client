@@ -1,27 +1,46 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import NotAuthorized from '../NotAuthorized';
 
 function Grades() {
     const [gradeData, setGradeData] = useState([])
+    const [isAuthorized, setIsAuthorized] = useState(true);
+    const navigate = useNavigate()
+    const token = localStorage.getItem('token')
 
     // Get grades data
     useEffect(() => {
-        fetch(`http://localhost:5000/api/grades/1`)
+        if (!token) {
+            setIsAuthorized(false);
+            return;
+          }
+
+        fetch(`http://localhost:5000/api/grades/1`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        })
         .then((res) => res.json())
         .then((data) => setGradeData(data.assessmentDetails))
         .catch((error) => console.error(error))
     }, [])
 
+    if (!isAuthorized) {
+        return <NotAuthorized />;
+    };
+
   return (
     <div>
-        <div className="w-full p-4 bg-gray-800 flex-none hidden md:block">
-            <h1 className='text-white'>GRADES</h1>
+        <div className="w-full p-4 bg-gray-800 flex items-center">
+            <img src="icons8-left-arrow-64.png" className="h-[2rem] cursor-pointer" alt="left-arrow" onClick={() => navigate(-1)} />
+            <h1 className="text-white ml-[55rem]">GRADES</h1>
         </div>
         <div>
-            <table className='w-[30rem] ml-[10rem] overflow-x-auto table-auto divide-y divide-gray-200 border border-gray-300'>
+            <table className='w-[90%] ml-[2rem] mt-[2rem] overflow-x-auto table-auto divide-y divide-gray-200 border border-gray-300'>
                 <thead>
-                    <tr className='bg-gray-200'>
-                        <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase">Assessment</th>
-                        <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase">Grade</th>
+                    <tr className='bg-[#EA501A]'>
+                        <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase text-white">Assessment</th>
+                        <th className="px-6 py-3 text-center font-bold leading-4 tracking-widest uppercase text-white">Grade</th>
                     </tr>
                 </thead>
                 <tbody className='divide-y divide-gray-200'>

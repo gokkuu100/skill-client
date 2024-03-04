@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import NotAuthorized from '../NotAuthorized';
 
 function CreateAssessment() {
+  const userId = localStorage.getItem('id')
+  const navigate = useNavigate()
+  const [isAuthorized, setIsAuthorized] = useState(true);
+  const token = localStorage.getItem('token')
   const [assessmentData, setAssessmentData] = useState({
     title: '',
     description: '',
-    mentorId: 1,
+    mentorId: userId,
   });
 
   const [questions, setQuestions] = useState([
@@ -39,11 +45,17 @@ function CreateAssessment() {
     e.preventDefault();
   
     try {
+      if (!token) {
+        setIsAuthorized(false);
+        return;
+      }
+
       // Submit Assessment
       const assessmentResponse = await fetch('http://localhost:5000/api/assessments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(assessmentData),
       });
@@ -59,6 +71,7 @@ function CreateAssessment() {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`
             },
             body: JSON.stringify({ questions, mentorId: assessmentData.mentorId }),
           }
@@ -78,79 +91,102 @@ function CreateAssessment() {
     }
   };
 
+  if (!isAuthorized) {
+    return <NotAuthorized />;
+  }
+
   return (
     <div>
-      <div className="w-full p-4 bg-gray-800 flex-none hidden md:block">
-        <h1 className="text-white">CREATE ASSESSMENT</h1>
+      <div className="w-full p-4 bg-gray-800 flex items-center">
+        <img src="icons8-left-arrow-64.png" className="h-[2rem] cursor-pointer" alt="left-arrow" onClick={() => navigate(-1)} />
+        <h1 className="text-white ml-[55rem]">CREATE ASSESSMENTS</h1>
       </div>
-      <form onSubmit={handleSubmit} id="assessment-form">
+      <form onSubmit={handleSubmit} className="mx-10 my-4 text-center">
         {/* Assessment Section */}
-        <label>Title</label>
-        <input type="text" name="title" onChange={handleAssessmentChange} />
-        <br />
-        <label>Description</label>
-        <input type="textarea" name="description" onChange={handleAssessmentChange} />
-        <br />
+        <div className="mb-4">
+          <h2 className="font-bold text-[#EA501A] text-2xl">CREATE ASSESSMENT</h2>
+          <label className="">Title</label>
+          <input
+            type="text"
+            name="title"
+            className="border ml-[1rem] p-2 w-[15rem]"
+            onChange={handleAssessmentChange}
+          /><br />
+          <label className="">Description</label>
+          <textarea
+            name="description"
+            className="border ml-[1rem] mt-[1rem] p-2 w-[15rem]"
+            onChange={handleAssessmentChange}
+          />
+        </div>
 
         {/* Questions Section */}
-        <h2>Create Questions</h2>
+        <h2 className="font-bold text-2xl text-center mb-4 text-[#EA501A]">Create Questions</h2>
         {questions.map((question, index) => (
-          <div key={index}>
-            <label>Question title</label>
+          <div key={index} className="mb-4">
+            <label className="">Question title</label>
             <input
               type="text"
               name="title"
               value={question.title}
               onChange={(e) => handleQuestionChange(e, index)}
-            />
-            <br />
-            <label>Choice1: </label>
+              className="border p-2 ml-[1rem] w-[25rem]"
+            /><br />
+            <label className="mt-2">Choice1:</label>
             <input
               type="text"
               name="choice1"
               value={question.choice1}
               onChange={(e) => handleQuestionChange(e, index)}
-            />
-            <br />
-            <label>Choice2: </label>
+              className="border p-2 ml-[1rem] w-[15rem]"
+            /><br />
+            <label className="mt-2">Choice2:</label>
             <input
               type="text"
               name="choice2"
               value={question.choice2}
               onChange={(e) => handleQuestionChange(e, index)}
-            />
-            <br />
-            <label>Choice3: </label>
+              className="border p-2 ml-[1rem] w-[15rem]"
+            /><br />
+            <label className="mt-2">Choice3:</label>
             <input
               type="text"
               name="choice3"
               value={question.choice3}
               onChange={(e) => handleQuestionChange(e, index)}
-            />
-            <br />
-            <label>Choice4: </label>
+              className="border p-2 ml-[1rem] w-[15rem]"
+            /><br />
+            <label className="mt-2">Choice4:</label>
             <input
               type="text"
               name="choice4"
               value={question.choice4}
               onChange={(e) => handleQuestionChange(e, index)}
-            />
-            <br />
-            <label>CorrectAnswer: </label>
+              className="border p-2 ml-[1rem] w-[15rem]"
+            /><br />
+            <label className="mt-2">CorrectAnswer:</label>
             <input
               type="text"
               name="correctChoice"
               value={question.correctChoice}
               onChange={(e) => handleQuestionChange(e, index)}
+              className="border p-2 ml-[1rem] w-[15rem]"
             />
-            <br />
           </div>
         ))}
-        <button type="button" onClick={handleAddQuestion}>
+        <button
+          type="button"
+          onClick={handleAddQuestion}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
           Add Another Question
+        </button><br />
+        <button
+          type="submit"
+          className="bg-green-500 text-white px-4 py-2 rounded mt-4 hover:bg-green-700"
+        >
+          Submit Assessment and Questions
         </button>
-        <br />
-        <button type="submit">Submit Assessment and Questions</button>
       </form>
     </div>
   );

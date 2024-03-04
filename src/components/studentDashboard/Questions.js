@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import NotAuthorized from '../NotAuthorized';
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
@@ -7,6 +8,9 @@ const Questions = () => {
   const [selectedAnswers, setSelectedAnswers] = useState({})
   const [remainingTime, setRemainingTime] = useState(600)
   const { assessmentId } = useParams();
+  const [isAuthorized, setIsAuthorized] = useState(true);
+  const navigate = useNavigate()
+  const token = localStorage.getItem('token')
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -15,8 +19,17 @@ const Questions = () => {
           console.log("error");
           return;
         }
+
+        if (!token) {
+          setIsAuthorized(false);
+          return;
+        }
         
-        const response = await fetch(`http://localhost:5000/api/questions/${assessmentId}`); 
+        const response = await fetch(`http://localhost:5000/api/questions/${assessmentId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }); 
         const data = await response.json();
         setQuestions(data.questions);
         setAssessmentTitle(data.assessmentTitle)
@@ -54,7 +67,7 @@ const Questions = () => {
     try {
       const response = await fetch ('http://localhost:5000/api/answers', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({
           studentId: 1,
           assessmentId: 2,
@@ -73,10 +86,15 @@ const Questions = () => {
     return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   };
 
+  if (!isAuthorized) {
+    return <NotAuthorized />;
+  }
+
   return (
     <div>
-      <div className="w-full p-4 bg-gray-800 flex-none hidden md:block">
-        <h1 className='text-white'>ASSESSMENTS</h1>
+      <div className="w-full p-4 bg-gray-800 flex items-center">
+        <img src="/icons8-left-arrow-64.png" className="h-[2rem] cursor-pointer" alt="left-arrow" onClick={() => navigate(-1)} />
+        <h1 className="text-white ml-[55rem]">QUESTIONS</h1>
       </div>
 
       <div className="max-w-5xl mx-auto mt-8">

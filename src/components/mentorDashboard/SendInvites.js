@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import NotAuthorized from '../NotAuthorized';
 
 function SendInvites() {
   const [assessments, setAssessments] = useState([]);
@@ -7,15 +9,27 @@ function SendInvites() {
   const [selectedAssessment, setSelectedAssessment] = useState(null);
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(true);
+  const navigate = useNavigate()
+  const token = localStorage.getItem('token')
+  const userId = localStorage.getItem('id')
 
   useEffect(() => {
-    // Fetch assessments by mentor (replace 'mentorId' with the actual mentor ID)
-    axios.get('http://localhost:5000/api/assessments/1')
+    if (!token) {
+      setIsAuthorized(false);
+      return;
+    }
+
+    axios.get(`http://localhost:5000/api/assessments/${userId}`,
+    {headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json'}}
+    )
       .then(response => setAssessments(response.data.assessments))
       .catch(error => console.error('Error fetching assessments:', error));
 
     // Fetch all students
-    axios.get('http://localhost:5000/api/students')
+    axios.get('http://localhost:5000/api/students',
+    {headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json'}}
+    )
       .then(response => setStudents(response.data.students))
       .catch(error => console.error('Error fetching students:', error));
   }, []);
@@ -28,14 +42,16 @@ function SendInvites() {
 
     try {
       // Replace 'mentorId' with the actual mentor ID
-      const mentorId = 1;
+      const mentorId = userId;
       
-      // Send invite to selected students for the selected assessment
+      // Send invite to selected students
       const response = await axios.post('http://localhost:5000/api/sendInvite', {
         mentorId,
         studentIds: selectedStudents,
         assessmentId: selectedAssessment,
-      });
+      },
+      {headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json'}}
+      );
 
       console.log('Invites sent:', response.data.invites);
       setModalOpen(false);
@@ -44,12 +60,19 @@ function SendInvites() {
     }
   };
 
+  if (!isAuthorized) {
+    return <NotAuthorized />;
+  }
+
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Assessments by Mentor</h1>
-      <table className="min-w-full bg-white border border-gray-300">
+    <div className="">
+        <div className="w-full p-4 bg-gray-800 flex items-center">
+          <img src="/icons8-left-arrow-64.png" className="h-[2rem] cursor-pointer" alt="left-arrow" onClick={() => navigate(-1)} />
+          <h1 className="text-white ml-[55rem]">SEND INVITES</h1>
+        </div>
+      <table className="w-[90%] ml-[2rem] bg-white border border-gray-300 mt-[2rem]">
         <thead>
-          <tr>
+          <tr className='bg-[#EA501A] text-white '>
             <th className="py-2 px-4 border-b">Assessment Title</th>
             <th className="py-2 px-4 border-b">Send Invite</th>
           </tr>
