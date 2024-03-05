@@ -1,5 +1,5 @@
 import './App.css';
-import HomePage from './components/HomePage';
+import HomePage from './components/studentDashboard/HomePage';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Login from './components/Login';

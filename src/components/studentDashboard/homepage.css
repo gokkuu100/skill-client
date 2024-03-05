@@ -1,0 +1,27 @@
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+.home-page {
+  height: 950px;
+  background-image: url('/public/pexels-christina-morillo-1181359.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  display: flex;
+  flex-direction: column;
+}
+
+.side-bar {
+  background-image: url('/public/pexels-christina-morillo-1181359.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  width: 110rem;
+  opacity: 85%;
+}

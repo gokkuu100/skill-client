@@ -1,5 +1,7 @@
 import { useDispatch } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { logout } from '../components/actions/authActions';
+import { faCircleStop, faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 
 const Logout = () => {
   const dispatch = useDispatch();
@@ -11,7 +13,7 @@ const Logout = () => {
   };
 
   return (
-    <button onClick={handleLogout}>Logout</button>
+    <button onClick={handleLogout}><FontAwesomeIcon icon={faCircleXmark} /> Logout</button>
   );
 };
 

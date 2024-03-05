@@ -7,6 +7,8 @@ function SignUp() {
     name: '',
     email: '',
     password: '',
+    skills: [],
+    occupation: ''
   });
 
   const handleInputChange = (e) => {
@@ -54,7 +56,7 @@ function SignUp() {
       <div className='m-[5rem] text-xl'>
         <h1>SIGN UP</h1>
         <form onSubmit={handleSubmit} className='text-left'>
-          <label htmlFor='name'>Name</label>
+          <label htmlFor='name'>Full Name</label>
           <br />
           <input
             type='text'
@@ -82,6 +84,28 @@ function SignUp() {
             type='password'
             name='password'
             value={formData.password}
+            onChange={handleInputChange}
+            className='border border-black rounded p-[0.5rem] w-[40vw]'
+            required
+          />
+          <br />
+          <label htmlFor='skills'>Skills (use commas)</label>
+          <br />
+          <input
+            type='text'
+            name='skills'
+            value={formData.skills.join(',')}
+            onChange={handleInputChange}
+            className='border border-black rounded p-[0.5rem] w-[40vw]'
+            required
+          />
+          <br />
+          <label htmlFor='occupation'>Occupation</label>
+          <br />
+          <input
+            type='text'
+            name='occupation'
+            value={formData.occupation}
             onChange={handleInputChange}
             className='border border-black rounded p-[0.5rem] w-[40vw]'
             required
